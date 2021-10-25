@@ -28,7 +28,7 @@ class Card():
 
 CARDS = [Card(c, n) for c in COLOR for n in range(1, 14)]
 # %%
-OPERATIONS = [(m, n) for m in range(0, 4) for n in range(8, 16)] \
+OPERATIONS = [(m, n) for m in range(0, 4) for n in range(4, 16)] \
              + [(m, n) for m in range(4, 8) for n in list(range(0, 4)) + list(range(8, 16))] \
              + [(m, n) if m > n else (m, n + 1)
                 for m in range(8, 16) for n in range(0, 15)]

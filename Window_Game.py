@@ -17,8 +17,7 @@ FPS = 30
 IMAGES = utils.LoadImages()
 RECTS = utils.LoadRects()
 BLACK = 0, 0, 0
-FONT = pygame.font.Font(None, 30)
-
+FONT = pygame.font.Font(None, 30):
 
 class WindowGame:
     def __init__(self):
