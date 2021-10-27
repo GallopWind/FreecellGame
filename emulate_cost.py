@@ -28,10 +28,21 @@ class CostEmulator:
     def EmulateOnce(self, mode):
         self.game.RandomNewGameAndRecordCost(self, mode)
 
-    def Emulate(self, num, mode):
+    def Emulate(self, num, path, mode):
+        count = 100000
         while self.train_data.shape[0] < num:
+            if self.train_data.shape[0] > count:
+                self.RecordData(path)
+                if count < 300000:
+                    count = count + 100000
+                else:
+                    count = count + 20000
             self.EmulateOnce(mode)
+        self.RecordData(path)
         return
+
+    def RecordData(self, path):
+        self.train_data.to_csv(path)
 
 
 if __name__ == "__main__":
@@ -39,5 +50,4 @@ if __name__ == "__main__":
     data_bag_name = sys.argv[2]
     mode = sys.argv[3]
     emulator = CostEmulator()
-    emulator.Emulate(amount, mode)
-    emulator.train_data.to_csv('data/' + data_bag_name)
+    emulator.Emulate(amount, 'data/' + data_bag_name, mode)
