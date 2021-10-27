@@ -35,7 +35,7 @@ class CostEmulator:
 
 
 if __name__ == "__main__":
-    amount = sys.argv[1]
+    amount = int(sys.argv[1])
     data_bag_name = sys.argv[2]
     mode = sys.argv[3]
     emulator = CostEmulator()
