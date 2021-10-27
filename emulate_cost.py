@@ -29,14 +29,11 @@ class CostEmulator:
         self.game.RandomNewGameAndRecordCost(self, mode)
 
     def Emulate(self, num, path, mode):
-        count = 100000
+        count = 20000
         while self.train_data.shape[0] < num:
             if self.train_data.shape[0] > count:
-                self.RecordData(path)
-                if count < 300000:
-                    count = count + 100000
-                else:
-                    count = count + 20000
+                self.RecordData(path + str(count))
+                count = count + 20000
             self.EmulateOnce(mode)
         self.RecordData(path)
         return
