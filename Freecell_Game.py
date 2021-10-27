@@ -243,7 +243,7 @@ class FreeCellGame:
             self.Move(oprt[0], oprt[1])
         return True
 
-    def RandomNewGameAndRecordCost(self, train_data):
+    def RandomNewGameAndRecordCost(self, train_data, mode):
         # output string + cost
         # string: (group_id + index) *52
         # clear all heap
@@ -275,8 +275,12 @@ class FreeCellGame:
             last_oprt = oprt
             # record data.
             step_cost = step_cost + 1
-            if step_cost > 20:
-                train_data.Add(*self.ObserveForData(), step_cost)
+            if mode == 'big_cost':
+                if step_cost > 20:
+                    train_data.Add(*self.ObserveForData(), step_cost)
+            elif mode == 'small_cost':
+                if step_cost < 25:
+                    train_data.Add(*self.ObserveForData(), step_cost)
         return
 
     def ValidOperations(self):

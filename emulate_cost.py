@@ -1,5 +1,8 @@
+#!python
+
 import Freecell_Game
 import pandas as pd
+import sys
 
 COLUMN = []
 for card_id in range(len(Freecell_Game.CARDS)):
@@ -22,16 +25,19 @@ class CostEmulator:
         except KeyError:
             self.train_data.loc[hash_index] = observe + [cost]
 
-    def EmulateOnce(self):
-        self.game.RandomNewGameAndRecordCost(self)
+    def EmulateOnce(self, mode):
+        self.game.RandomNewGameAndRecordCost(self, mode)
 
-    def EmulateUntilAmount(self, num):
+    def Emulate(self, num, mode):
         while self.train_data.shape[0] < num:
-            self.EmulateOnce()
+            self.EmulateOnce(mode)
         return
 
 
 if __name__ == "__main__":
+    amount = sys.argv[1]
+    data_bag_name = sys.argv[2]
+    mode = sys.argv[3]
     emulator = CostEmulator()
-    emulator.EmulateUntilAmount(500)
-    emulator.train_data.to_csv(r'./data/test.csv')
+    emulator.Emulate(amount, mode)
+    emulator.train_data.to_csv('data/' + data_bag_name)
