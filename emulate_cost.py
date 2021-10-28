@@ -5,6 +5,7 @@ import pandas as pd
 import sys
 
 COLUMN = []
+COLUMN.append('primary_key')
 for card_id in range(len(Freecell_Game.CARDS)):
     # card_id + group+id/index
     COLUMN.append(('%02d' % card_id) + 'id')
@@ -16,6 +17,7 @@ class CostEmulator:
     def __init__(self):
         self.game = Freecell_Game.FreeCellGame()
         self.train_data = pd.DataFrame(columns=COLUMN, dtype='uint8')
+        self.train_data.set_index('primary_key', inplace=True)
 
     def Add(self, hash_index, observe, cost):
         try:
