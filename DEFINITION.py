@@ -6,6 +6,6 @@ for x in range(52):
 COLUMNS.append('cost')
 # defined dtypes
 DTYPES = dict()
-DTYPES[NAMES[0]] = 'str'
+DTYPES[COLUMNS[0]] = 'str'
 for x in range(1, 106):
-    DTYPES[NAMES[x]] = 'uint8'
+    DTYPES[COLUMNS[x]] = 'uint8'
