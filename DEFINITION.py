@@ -9,3 +9,8 @@ DTYPES = dict()
 DTYPES[COLUMNS[0]] = 'str'
 for x in range(1, 106):
     DTYPES[COLUMNS[x]] = 'uint8'
+
+P_DTYPES = dict()
+DTYPES[COLUMNS[0]] = 'str'
+for x in range(1, 106):
+    DTYPES[COLUMNS[x]] = 'float16'

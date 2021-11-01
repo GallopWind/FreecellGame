@@ -25,7 +25,7 @@ EPOCH = 5
 class CostDataset(Dataset):
     def __init__(self, csv_path):
         super(CostDataset, self).__init__()
-        self.data = pd.read_csv(csv_path, dtype=DEFINITION.DTYPES, usecols=DEFINITION.COLUMNS[1:])
+        self.data = pd.read_csv(csv_path, dtype=DEFINITION.P_DTYPES, usecols=DEFINITION.COLUMNS[1:])
 
     def __len__(self):
         return len(self.data)
