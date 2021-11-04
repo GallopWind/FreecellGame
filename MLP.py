@@ -20,7 +20,7 @@ NUM_o = 1
 
 # train param
 BATCH_SIZE = 1024
-EPOCH = 5
+EPOCH = 3
 
 # %%
 # utils
@@ -55,13 +55,13 @@ class MLP(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(NUM_i, NUM_h1),
             nn.LeakyReLU(),
-            # nn.Dropout(),
+            nn.Dropout(0.5),
             nn.Linear(NUM_h1, NUM_h2),
             nn.LeakyReLU(),
-            # nn.Dropout()
+            nn.Dropout(0.5),
             nn.Linear(NUM_h2, NUM_h3),
             nn.LeakyReLU(),
-            # nn.Dropout()
+            nn.Dropout(0.5),
             nn.Linear(NUM_h3, NUM_o),
         )
 
@@ -141,9 +141,8 @@ torch.save(model.state_dict(), "data/model")
 print("Done")
 
 # %%
-tmp = iter(train_data_loader)
+iter = iter(train_data_loader)
+tmp = next(iter)
 # %%
-tmp = next(tmp)
-# %%
-tmp[0][0]
+tmp[0][1]
 # %%

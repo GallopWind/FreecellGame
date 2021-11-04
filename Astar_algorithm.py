@@ -13,7 +13,7 @@ class Cost:
 
     def UpdateByCost(self, other):
         self.cost_start = other.cost_start
-        self.cost_combine = self.cost_start + cost.cost_end
+        self.cost_combine = self.cost_start + self.cost_end
 
 
 class Map:
@@ -66,7 +66,12 @@ class Map:
                 return -1
 
         def GetCost(self, cost_start):
-            return Cost(cost_start, math.hypot(self.map_refer.start[0] - self.x, self.map_refer.start[1] - self.y))
+            return Cost(
+                cost_start,
+                math.hypot(
+                    self.map_refer.start[0] - self.x, self.map_refer.start[1] - self.y
+                ),
+            )
 
         def GetNeighbors(self):
             res = []
@@ -74,7 +79,12 @@ class Map:
                 for dy in [-1, 0, 1]:
                     x = self.x + dx
                     y = self.y + dy
-                    if x < 1 or x > self.map_refer.x_range or y < 1 or y > self.map_refer.y_range:
+                    if (
+                        x < 1
+                        or x > self.map_refer.x_range
+                        or y < 1
+                        or y > self.map_refer.y_range
+                    ):
                         # out range
                         continue
                     occupy = self.map_refer.GetCellOccupy(x, y)
@@ -82,13 +92,29 @@ class Map:
                         # occupied
                         continue
                     if dx * dy != 0:
-                        res.append(self.map_refer.Cell(x, y, occupy, self,
-                                                       self.cost.cost_start + 1.414213, self.map_refer))
+                        res.append(
+                            self.map_refer.Cell(
+                                x,
+                                y,
+                                occupy,
+                                self,
+                                self.cost.cost_start + 1.414213,
+                                self.map_refer,
+                            )
+                        )
                     elif dx + dy == 0:
                         continue
                     else:
                         res.append(
-                            self.map_refer.Cell(x, y, occupy, self, self.cost.cost_start + 1, self.map_refer))
+                            self.map_refer.Cell(
+                                x,
+                                y,
+                                occupy,
+                                self,
+                                self.cost.cost_start + 1,
+                                self.map_refer,
+                            )
+                        )
             return res
 
         def CheckEnd(self):
@@ -112,7 +138,9 @@ class Map:
         res_Y = []
         # vertical wall: 30
         random_X = numpy.random.choice(self.x_range, self.vertical_num, replace=False)
-        random_Y = numpy.random.choice(self.y_range - self.vertical_l, self.vertical_num, replace=False)
+        random_Y = numpy.random.choice(
+            self.y_range - self.vertical_l, self.vertical_num, replace=False
+        )
         for x, y in zip(random_X, random_Y):
             wall_x = x + 1
             wall_y = y + 1
@@ -122,7 +150,9 @@ class Map:
                 res_X.append(wall_x)
                 res_Y.append(cell_y)
         # horizon wall
-        random_X = numpy.random.choice(self.x_range - self.horizon_l, self.horizon_num, replace=False)
+        random_X = numpy.random.choice(
+            self.x_range - self.horizon_l, self.horizon_num, replace=False
+        )
         random_Y = numpy.random.choice(self.y_range, self.horizon_num, replace=False)
         for x, y in zip(random_X, random_Y):
             wall_x = x + 1
@@ -160,16 +190,16 @@ class Map:
         return res_x, res_y
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     grid_map = Map(100, 100)
     grid_map.SetWallConfig(3, 30, 3, 30)
     wall_X, wall_Y = grid_map.RandomGenerate()
     path_X, path_Y = grid_map.SearchPath()
     figure = plt.figure()
     ax1 = figure.add_subplot(1, 2, 1)
-    ax1.plot(wall_X, wall_Y, 'bo')
+    ax1.plot(wall_X, wall_Y, "bo")
     ax2 = figure.add_subplot(1, 2, 2)
-    ax2.plot(wall_X, wall_Y, 'bx', alpha=0.5)
-    ax2.plot(path_X, path_Y, 'rx', alpha=0.5)
+    ax2.plot(wall_X, wall_Y, "bx", alpha=0.5)
+    ax2.plot(path_X, path_Y, "rx", alpha=0.5)
     figure.show()
     input()
