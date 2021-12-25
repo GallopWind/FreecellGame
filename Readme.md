@@ -4,7 +4,7 @@ Freecell is a very classic solitaire game. Since 2000, people have began to find
 
 This is my built with pygame.
 
-<img src="images/game.png" width=50% />
+<img src="https://raw.githubusercontent.com/GallopWind/FreecellGame/master/images/game.png" width=50% />
 
 
 Can we build a AI to play it as smart as human? As for me, finding the solve can be done in less than 200 steps search. Human intelligence is awesome!
