@@ -1,6 +1,6 @@
 # FreeCell AI
 
-Freecell is a very classic solitaire game. Since 2000, people have began to find a efficient solver for it.
+Freecell is a very classic solitaire game. Since 2000, people have began to find an efficient solver for it.
 
 This is my built with pygame.
 
