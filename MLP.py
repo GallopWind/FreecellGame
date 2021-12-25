@@ -111,38 +111,39 @@ def evaluate(model, device, data_loader):
     print("average test loss: %.7f" % model_output_error)
 
 
-# %%
-# config device
-device = "cuda" if torch.cuda.is_available() else "cpu"
+if __name__ == "__main__":
+    # %%
+    # config device
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# read and process tata
-data_path = r"data/10-27-data-p.csv"
-cost_dataset = CostDataset(data_path)
-train_data_num = int(0.9 * len(cost_dataset))
-test_data_num = len(cost_dataset) - train_data_num
-train_dataset, test_dataset = torch.utils.data.random_split(
-    dataset=cost_dataset,
-    lengths=[train_data_num, test_data_num],
-    generator=torch.Generator().manual_seed(13),
-)
-train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
-# build model
-model = MLP().to(device=device)
-# %%
-# train and evaluate
-for i in range(EPOCH):
-    print("Epoch: %d" % i)
-    train(model, device, train_data_loader)
-    evaluate(model, device, test_data_loader)
+    # read and process tata
+    data_path = r"data/10-27-data-p.csv"
+    cost_dataset = CostDataset(data_path)
+    train_data_num = int(0.9 * len(cost_dataset))
+    test_data_num = len(cost_dataset) - train_data_num
+    train_dataset, test_dataset = torch.utils.data.random_split(
+        dataset=cost_dataset,
+        lengths=[train_data_num, test_data_num],
+        generator=torch.Generator().manual_seed(13),
+    )
+    train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    # build model
+    model = MLP().to(device=device)
+    # %%
+    # train and evaluate
+    for i in range(EPOCH):
+        print("Epoch: %d" % i)
+        train(model, device, train_data_loader)
+        evaluate(model, device, test_data_loader)
 
-# Save model
-torch.save(model.state_dict(), "data/model")
-print("Done")
+    # Save model
+    torch.save(model.state_dict(), "data/model")
+    print("Done")
 
-# %%
-iter = iter(train_data_loader)
-tmp = next(iter)
-# %%
-tmp[0][1]
-# %%
+    # %%
+    iter = iter(train_data_loader)
+    tmp = next(iter)
+    # %%
+    tmp[0][1]
+    # %%

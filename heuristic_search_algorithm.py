@@ -2,6 +2,7 @@ import queue
 import heapq
 import math
 from abc import ABC, abstractmethod, ABCMeta
+import numpy as np
 
 
 class BaseNode(ABC):
@@ -51,31 +52,40 @@ class HeuristicSearch:
     def SetRoot(self, node):
         self.root_node = node
 
-    def Search(self, mode='HeuristicSearch'):
-        if mode == 'HeuristicSearch':
-            self.cur_node = self.root_node
-            while not self.cur_node.CheckEnd():
-                self.traversed_nodes.append(self.cur_node)
-                neighbor_nodes = self.cur_node.GetNeighbors()
-                for node in neighbor_nodes:
-                    # danger code.
-                    # if node in self.traversed_nodes:
-                    #     # update heuristic can be done in 'in' by overwrite __eq__.
-                    #     pass
-                    # else:
-                    #     heapq.heappush(self.to_traverse_nodes, node)
-                    found = False
-                    for elem_node in self.traversed_nodes:
-                        if elem_node == node:
-                            found = True
-                            elem_node.UpdateByNode(node)
-                            break
-                    if found:
-                        # traversed node
-                        pass
+    def Search(self, mode="HeuristicSearch", max_nodes=10000):
+        with open("data/search_record", "w") as f:
+            if mode == "HeuristicSearch":
+                self.cur_node = self.root_node
+                while (
+                    not self.cur_node.CheckEnd()
+                    and len(self.traversed_nodes) < max_nodes
+                ):
+                    print(self.cur_node.game_state.ObserveForHuman(), file=f)
+                    self.traversed_nodes.append(self.cur_node)
+                    neighbor_nodes = self.cur_node.GetNeighbors()
+                    for node in neighbor_nodes:
+                        # danger code.
+                        # if node in self.traversed_nodes:
+                        #     # update heuristic can be done in 'in' by overwrite __eq__.
+                        #     pass
+                        # else:
+                        #     heapq.heappush(self.to_traverse_nodes, node)
+                        found = False
+                        for elem_node in self.traversed_nodes:
+                            if elem_node == node:
+                                found = True
+                                elem_node.UpdateByNode(node)
+                                break
+                        if found:
+                            # traversed node
+                            pass
+                        else:
+                            heapq.heappush(self.to_traverse_nodes, node)
+                    if self.to_traverse_nodes:
+                        self.cur_node = heapq.heappop(self.to_traverse_nodes)
                     else:
-                        heapq.heappush(self.to_traverse_nodes, node)
-                if self.to_traverse_nodes:
-                    self.cur_node = heapq.heappop(self.to_traverse_nodes)
+                        break
+                if self.cur_node.CheckEnd():
+                    return True
                 else:
-                    break
+                    return False
