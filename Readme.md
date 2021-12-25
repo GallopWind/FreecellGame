@@ -10,7 +10,7 @@ This is my built with pygame.
 
 Can we build a AI to play it as smart as human? As for me, finding the solve can be done in less than 200 steps search. Human intelligence is awesome!
 
-I have tried DRN method to solve this problem. But its performance was terrible. Some inherent problem can not be solved.
+I have tried DQN method to solve this problem. But its performance was terrible. Some inherent problem can not be solved.
 
 While looking deeply into this problem, after reading some reference, I got lessons from AlphaZero.
 
